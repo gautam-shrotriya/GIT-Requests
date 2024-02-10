@@ -4,4 +4,11 @@
     <string name="my_github_username">gautam_shrotriya</string>
     <string name="continue_msg">GET REPOS</string>
     <string name="msg_invalid_username">Please enter a valid name</string>
+    <string name="starImgDescription">No. of stars</string>
+    <string name="viewerImgDescription">No. of viewers</string>
+    <string name="user_details">User</string>
+    <string name="repo_list">Repositories</string>
+    <string name="pull_req_list">Closed PRs</string>
+    <string name="pr_closed_date">PR Closed Date</string>
+    <string name="pr_created_date">PR Created Date</string>
 </resources>

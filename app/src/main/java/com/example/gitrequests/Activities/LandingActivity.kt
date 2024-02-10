@@ -48,7 +48,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun goToReposActivity(userName: String) {
-        val landingToRepoIntent = Intent(this@LandingActivity, RepoListActivity::class.java)
+        val landingToRepoIntent = Intent(this@LandingActivity, UserActivity::class.java)
         landingToRepoIntent.putExtra(Constants.USERNAME_KEY, userName)
         startActivity(landingToRepoIntent)
     }
