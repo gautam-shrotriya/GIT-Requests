@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GIT Requests</string>
+    <string name="enter_your_github_username">Enter github username</string>
+    <string name="my_github_username">gautam_shrotriya</string>
+    <string name="continue_msg">GET REPOS</string>
+    <string name="msg_invalid_username">Please enter a valid name</string>
+</resources>
