@@ -1,5 +1,6 @@
 package com.example.gitrequests.Data.Repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitrequests.Data.Models.GitHubUser
@@ -12,6 +13,7 @@ import retrofit2.HttpException
 class GithubDataRepository {
 
     var api: APICallback = APIService.retrofit.create(APICallback::class.java)
+    private val TAG = "ERROR"
 
     private val userLiveData = MutableLiveData<GitHubUser>()
     val user: LiveData<GitHubUser>
@@ -48,16 +50,25 @@ class GithubDataRepository {
     }
 
     suspend fun getPublicRepos(username: String) {
-        val result = api.getPublicRepos(username)
-        if(result.body() != null) {
-            _repoList.postValue(result.body())
+        try{
+            val result = api.getPublicRepos(username)
+            if(result.body() != null) {
+                _repoList.postValue(result.body())
+            }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.printStackTrace().toString())
         }
+
     }
 
     suspend fun getClosedPRs(username: String, repoName: String) {
-        val result = api.getClosedPRforRepo(username, repoName)
-        if(result.body() != null) {
-            _prList.postValue(result.body())
+        try{
+            val result = api.getClosedPRforRepo(username, repoName)
+            if(result.body() != null) {
+                _prList.postValue(result.body())
+            }
+        } catch (e: HttpException) {
+            Log.e(TAG, e.printStackTrace().toString())
         }
     }
 
