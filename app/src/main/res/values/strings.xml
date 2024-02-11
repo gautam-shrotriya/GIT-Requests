@@ -11,4 +11,9 @@
     <string name="pull_req_list">Closed PRs</string>
     <string name="pr_closed_date">PR Closed Date</string>
     <string name="pr_created_date">PR Created Date</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="view_all_repositories">View All Repositories</string>
+    <string name="no_internet_connection">Please check your internet connection.</string>
+    <string name="user_does_not_exist">User does not exist.</string>
+    <string name="public_repo_count">Public repositories : %s</string>
 </resources>

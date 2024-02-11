@@ -9,13 +9,23 @@
     android:gravity="center"
     tools:context=".Activities.UserActivity">
 
+    <TextView
+        android:id="@+id/errorUserTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="User Does Not Exist"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/userImageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_baseline_broken_image"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/user_profile_picture" />
 
     <TextView
         android:id="@+id/usernameTextView"
@@ -23,7 +33,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Username"
+        tools:text="Username"
         android:layout_marginTop="16dp"/>
 
     <TextView
@@ -32,14 +42,14 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="@android:color/darker_gray"
-        android:text="No. of Repositories: 0"
+        tools:text="No. of Repositories: 0"
         android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/viewRepositoriesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View All Repositories"
+        android:text="@string/view_all_repositories"
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>
