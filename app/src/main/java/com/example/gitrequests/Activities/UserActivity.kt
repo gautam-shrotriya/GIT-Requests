@@ -31,6 +31,7 @@ class UserActivity : AppCompatActivity() {
 
         userViewModel = ViewModelProvider(this, UserViewModelFactory(GithubDataRepository(), username))[UserViewModel::class.java]
 
+        setOnClicks()
         observeUserData()
     }
 

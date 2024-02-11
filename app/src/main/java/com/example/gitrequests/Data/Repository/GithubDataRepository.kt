@@ -3,6 +3,7 @@ package com.example.gitrequests.Data.Repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitrequests.Data.Models.GitHubUser
+import com.example.gitrequests.Data.Models.Repo
 import com.example.gitrequests.Data.Services.APICallback
 import com.example.gitrequests.Data.Services.APIService
 import retrofit2.HttpException
@@ -19,12 +20,13 @@ class GithubDataRepository {
     val userExists: LiveData<Boolean>
         get() = _userExists
 
-    suspend fun getUser(username: String) {
-//        val result = api.getUserFromUsername(username)
-//        if(result.body() != null) {
-//            userLiveData.postValue(result.body())
-//        }
+    private val _repoList = MutableLiveData<List<Repo>>()
+    val repoList : LiveData<List<Repo>>
+    get() = _repoList
 
+
+
+    suspend fun getUser(username: String) {
         try {
             val result = api.getUserFromUsername(username)
             if (result.isSuccessful) {
@@ -37,6 +39,13 @@ class GithubDataRepository {
             }
         } catch (e: HttpException) {
             _userExists.postValue(false)
+        }
+    }
+
+    suspend fun getPublicRepos(username: String) {
+        val result = api.getPublicRepos(username)
+        if(result.body() != null) {
+            _repoList.postValue(result.body())
         }
     }
 

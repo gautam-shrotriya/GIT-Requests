@@ -16,4 +16,5 @@
     <string name="no_internet_connection">Please check your internet connection.</string>
     <string name="user_does_not_exist">User does not exist.</string>
     <string name="public_repo_count">Public repositories : %s</string>
+    <string name="zero_public_repositories">There are no public repositories.</string>
 </resources>
