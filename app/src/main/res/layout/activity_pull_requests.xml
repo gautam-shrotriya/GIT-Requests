@@ -19,7 +19,7 @@
         tools:listitem="@layout/item_pull_request" />
 
     <TextView
-        android:id="@+id/errorPRTextView"
+        android:id="@+id/zeroPRTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="An error occurred. Please check your internet connection."

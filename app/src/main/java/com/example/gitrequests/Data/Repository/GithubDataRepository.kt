@@ -3,6 +3,7 @@ package com.example.gitrequests.Data.Repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.gitrequests.Data.Models.GitHubUser
+import com.example.gitrequests.Data.Models.PrModel
 import com.example.gitrequests.Data.Models.Repo
 import com.example.gitrequests.Data.Services.APICallback
 import com.example.gitrequests.Data.Services.APIService
@@ -23,6 +24,10 @@ class GithubDataRepository {
     private val _repoList = MutableLiveData<List<Repo>>()
     val repoList : LiveData<List<Repo>>
     get() = _repoList
+
+    private val _prList = MutableLiveData<List<PrModel>>()
+    val prList : LiveData<List<PrModel>>
+        get() = _prList
 
 
 
@@ -46,6 +51,13 @@ class GithubDataRepository {
         val result = api.getPublicRepos(username)
         if(result.body() != null) {
             _repoList.postValue(result.body())
+        }
+    }
+
+    suspend fun getClosedPRs(username: String, repoName: String) {
+        val result = api.getClosedPRforRepo(username, repoName)
+        if(result.body() != null) {
+            _prList.postValue(result.body())
         }
     }
 

@@ -2,7 +2,7 @@
     <string name="app_name">GIT Requests</string>
     <string name="enter_your_github_username">Enter github username</string>
     <string name="my_github_username">gautam_shrotriya</string>
-    <string name="continue_msg">GET REPOS</string>
+    <string name="continue_msg">Search User</string>
     <string name="msg_invalid_username">Please enter a valid name</string>
     <string name="starImgDescription">No. of stars</string>
     <string name="viewerImgDescription">No. of viewers</string>
@@ -17,4 +17,6 @@
     <string name="user_does_not_exist">User does not exist.</string>
     <string name="public_repo_count">Public repositories : %s</string>
     <string name="zero_public_repositories">There are no public repositories.</string>
+    <string name="zero_pull_requests">There are no pull requests.</string>
+    <string name="pull_request_number">PR #%s</string>
 </resources>

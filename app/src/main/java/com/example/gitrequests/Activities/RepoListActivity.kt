@@ -1,10 +1,10 @@
 package com.example.gitrequests.Activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,11 +12,8 @@ import com.example.gitrequests.Adapters.RepoAdapter
 import com.example.gitrequests.Data.Repository.GithubDataRepository
 import com.example.gitrequests.R
 import com.example.gitrequests.Utils.Constants
-import com.example.gitrequests.ViewModels.LandingViewModel
 import com.example.gitrequests.ViewModels.RepoViewModelFactory
 import com.example.gitrequests.ViewModels.ReposViewModel
-import com.example.gitrequests.ViewModels.UserViewModelFactory
-import com.example.gitrequests.databinding.ActivityLandingBinding
 import com.example.gitrequests.databinding.ActivityRepoListBinding
 
 class RepoListActivity : AppCompatActivity() {
@@ -37,9 +34,9 @@ class RepoListActivity : AppCompatActivity() {
 
         repoViewModel = ViewModelProvider(this, RepoViewModelFactory(GithubDataRepository(), username))[ReposViewModel::class.java]
 
-//        repoViewModel.repoList.observe(this, Observer {
-//            Log.d("REPO", it.toString())
-//        })
+        repoViewModel.repoList.observe(this, Observer {
+            Log.d("REPO", it.toString())
+        })
 
         repoAdapter = RepoAdapter(emptyList()) { username, repoName ->
             val intent = Intent(this, PullRequestsActivity::class.java)
