@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -37,12 +36,13 @@ class LandingActivity : AppCompatActivity() {
     private fun setOnClicks() {
         landingBinding.btnGetRepos.setOnClickListener {
             if(!isNetworkAvailable()) {
-                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
             } else {
                 val userName: String = landingBinding.etUserName.text.toString()
+
                 if(landingViewModel.isValid(userName)) {
                     landingViewModel.setUsername(userName)
-                    goToReposActivity(userName)
+                    goToUserDetailsActivity(userName)
                 } else {
                     Toast.makeText(this, R.string.msg_invalid_username, Toast.LENGTH_SHORT).show()
                 }
@@ -56,10 +56,10 @@ class LandingActivity : AppCompatActivity() {
         })
     }
 
-    private fun goToReposActivity(userName: String) {
-        val landingToRepoIntent = Intent(this@LandingActivity, UserActivity::class.java)
-        landingToRepoIntent.putExtra(Constants.USERNAME_KEY, userName)
-        startActivity(landingToRepoIntent)
+    private fun goToUserDetailsActivity(userName: String) {
+        val landingToUserIntent = Intent(this@LandingActivity, UserActivity::class.java)
+        landingToUserIntent.putExtra(Constants.USERNAME_KEY, userName)
+        startActivity(landingToUserIntent)
     }
 
     private fun isNetworkAvailable(): Boolean {

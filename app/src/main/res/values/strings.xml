@@ -3,7 +3,7 @@
     <string name="enter_your_github_username">Enter github username</string>
     <string name="my_github_username">gautam_shrotriya</string>
     <string name="continue_msg">Search User</string>
-    <string name="msg_invalid_username">Please enter a valid name</string>
+    <string name="msg_invalid_username">Please enter a valid username</string>
     <string name="starImgDescription">No. of stars</string>
     <string name="viewerImgDescription">No. of viewers</string>
     <string name="user_details">User</string>

@@ -38,13 +38,9 @@ class RepoListActivity : AppCompatActivity() {
 
         repoViewModel = ViewModelProvider(this, RepoViewModelFactory(GithubDataRepository(), username))[ReposViewModel::class.java]
 
-        repoViewModel.repoList.observe(this, Observer {
-            Log.d("REPO", it.toString())
-        })
-
         repoAdapter = RepoAdapter(emptyList()) { username, repoName ->
             if(!isNetworkAvailable()) {
-                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, PullRequestsActivity::class.java)
                 intent.putExtra(Constants.USERNAME_KEY, username)

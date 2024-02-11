@@ -41,10 +41,6 @@ class PullRequestsActivity : AppCompatActivity() {
         }
 
         observePRData()
-
-//        prViewModel.prList.observe(this, Observer {
-//            Log.d("PR", it.toString())
-//        })
     }
 
     private fun observePRData() {

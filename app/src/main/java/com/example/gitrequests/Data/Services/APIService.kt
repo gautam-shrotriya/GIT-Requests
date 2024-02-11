@@ -11,7 +11,7 @@ object APIService {
 
     private const val BASE_URL = "https://api.github.com/"
     val retrofit: Retrofit
-    val authToken = BuildConfig.GITHUB_ACCESS_TOKEN
+    private const val authToken = BuildConfig.GITHUB_ACCESS_TOKEN
 
     private val authInterceptor = AuthInterceptor(authToken)
 

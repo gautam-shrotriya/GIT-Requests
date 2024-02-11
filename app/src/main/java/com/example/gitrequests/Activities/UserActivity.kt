@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -44,7 +43,7 @@ class UserActivity : AppCompatActivity() {
     private fun setOnClicks() {
         userBinding.viewRepositoriesButton.setOnClickListener {
             if(!isNetworkAvailable()) {
-                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
             } else {
                 goToReposActivity(username)
             }
@@ -74,6 +73,7 @@ class UserActivity : AppCompatActivity() {
                 userBinding.errorUserTextView.visibility = View.GONE
                 userBinding.usernameTextView.text = user.login
                 userBinding.repoCountTextView.text = getString(R.string.public_repo_count, user.publicRepos.toString())
+
                 Glide.with(this)
                     .load(user.avatarUrl)
                     .placeholder(R.drawable.ic_baseline_broken_image)

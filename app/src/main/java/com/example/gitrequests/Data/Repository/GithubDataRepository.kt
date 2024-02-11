@@ -12,12 +12,12 @@ import retrofit2.HttpException
 
 class GithubDataRepository {
 
-    var api: APICallback = APIService.retrofit.create(APICallback::class.java)
+    private val api: APICallback = APIService.retrofit.create(APICallback::class.java)
     private val TAG = "ERROR"
 
-    private val userLiveData = MutableLiveData<GitHubUser>()
+    private val _user = MutableLiveData<GitHubUser>()
     val user: LiveData<GitHubUser>
-    get() = userLiveData
+    get() = _user
 
     private val _userExists = MutableLiveData<Boolean>()
     val userExists: LiveData<Boolean>
@@ -37,7 +37,7 @@ class GithubDataRepository {
         try {
             val result = api.getUserFromUsername(username)
             if (result.isSuccessful) {
-                userLiveData.postValue(result.body())
+                _user.postValue(result.body())
                 _userExists.postValue(true)
             } else {
                 if (result.code() == 404) {
