@@ -1,9 +1,13 @@
 package com.example.gitrequests.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,10 +43,14 @@ class RepoListActivity : AppCompatActivity() {
         })
 
         repoAdapter = RepoAdapter(emptyList()) { username, repoName ->
-            val intent = Intent(this, PullRequestsActivity::class.java)
-            intent.putExtra(Constants.USERNAME_KEY, username)
-            intent.putExtra(Constants.REPO_NAME_KEY, repoName)
-            startActivity(intent)
+            if(!isNetworkAvailable()) {
+                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, PullRequestsActivity::class.java)
+                intent.putExtra(Constants.USERNAME_KEY, username)
+                intent.putExtra(Constants.REPO_NAME_KEY, repoName)
+                startActivity(intent)
+            }
         }
 
         repoBinding.repoListRecyclerView.apply {
@@ -62,6 +70,28 @@ class RepoListActivity : AppCompatActivity() {
             }
             repoAdapter.updateRepoList(repos)
         })
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }

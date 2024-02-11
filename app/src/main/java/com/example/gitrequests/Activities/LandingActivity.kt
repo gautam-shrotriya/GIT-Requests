@@ -1,7 +1,12 @@
 package com.example.gitrequests.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,12 +36,16 @@ class LandingActivity : AppCompatActivity() {
 
     private fun setOnClicks() {
         landingBinding.btnGetRepos.setOnClickListener {
-            val userName: String = landingBinding.etUserName.text.toString()
-            if(landingViewModel.isValid(userName)) {
-                landingViewModel.setUsername(userName)
-                goToReposActivity(userName)
+            if(!isNetworkAvailable()) {
+                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, R.string.msg_invalid_username, Toast.LENGTH_SHORT).show()
+                val userName: String = landingBinding.etUserName.text.toString()
+                if(landingViewModel.isValid(userName)) {
+                    landingViewModel.setUsername(userName)
+                    goToReposActivity(userName)
+                } else {
+                    Toast.makeText(this, R.string.msg_invalid_username, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -51,6 +60,28 @@ class LandingActivity : AppCompatActivity() {
         val landingToRepoIntent = Intent(this@LandingActivity, UserActivity::class.java)
         landingToRepoIntent.putExtra(Constants.USERNAME_KEY, userName)
         startActivity(landingToRepoIntent)
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 }

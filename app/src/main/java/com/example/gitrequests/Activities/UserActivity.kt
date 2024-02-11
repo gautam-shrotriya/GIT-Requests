@@ -1,8 +1,14 @@
 package com.example.gitrequests.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,7 +43,11 @@ class UserActivity : AppCompatActivity() {
 
     private fun setOnClicks() {
         userBinding.viewRepositoriesButton.setOnClickListener {
-            goToReposActivity(username)
+            if(!isNetworkAvailable()) {
+                Toast.makeText(this, "Please connect to the internet", Toast.LENGTH_SHORT).show()
+            } else {
+                goToReposActivity(username)
+            }
         }
     }
 
@@ -48,14 +58,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun observeUserData() {
-
-//        if (!isNetworkAvailable()) {
-//            userBinding.errorUserTextView.text = getString(R.string.no_internet_connection)
-//            userBinding.errorUserTextView.visibility = View.VISIBLE
-//            hideUserDetailViews()
-//            return
-//        }
-
         // Observe user data
         userViewModel.userExists.observe(this, Observer { userExists ->
             if (!userExists) {
@@ -96,25 +98,25 @@ class UserActivity : AppCompatActivity() {
         userBinding.viewRepositoriesButton.visibility = View.VISIBLE
     }
 
-//    private fun isNetworkAvailable(): Boolean {
-//        val connectivityManager =
-//            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        if (connectivityManager != null) {
-//            val capabilities =
-//                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-//            if (capabilities != null) {
-//                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-//                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-//                    return true
-//                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-//                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-//                    return true
-//                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-//                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-//                    return true
-//                }
-//            }
-//        }
-//        return false
-//    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
